@@ -77,7 +77,7 @@ keystore.properties
 .cxx/
 
 # bundle
-Gemfile.lock
+#Gemfile.lock
 
 # Google Services (e.g. APIs or Firebase)
 # google-services.json
