@@ -76,6 +76,9 @@ keystore.properties
 .externalNativeBuild
 .cxx/
 
+# bundle
+Gemfile.lock
+
 # Google Services (e.g. APIs or Firebase)
 # google-services.json
 
