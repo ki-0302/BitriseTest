@@ -5,6 +5,6 @@ set -e
 set -x
 
 gem install danger
-gem install danger-checkstyle_format
+gem install danger-android_lint
 gem install danger-checkstyle_format
 danger
