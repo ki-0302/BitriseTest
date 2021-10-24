@@ -17,12 +17,19 @@ android {
     }
 
     signingConfigs {
+        debug {
+            def keystorePropertiesFile = project.rootProject.file("keystore.properties")
+            if (keystorePropertiesFile.exists()) {
+                def keystoreProperties = new Properties()
+                keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+                storeFile file(keystoreProperties['debugStoreFile'])
+            }
+        }
         release {
             def keystorePropertiesFile = project.rootProject.file("keystore.properties")
             if (keystorePropertiesFile.exists()) {
                 def keystoreProperties = new Properties()
                 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-
                 keyAlias keystoreProperties['keyAlias']
                 keyPassword keystoreProperties['keyPassword']
                 storeFile file(keystoreProperties['storeFile'])
@@ -32,6 +39,11 @@ android {
     }
 
     buildTypes {
+        debug {
+            minifyEnabled false
+            debuggable true
+            signingConfig = signingConfigs.debug
+        }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -72,7 +84,7 @@ task ktlint(type: JavaExec, group: "verification") {
     classpath = configurations.ktlint
     main = "com.pinterest.ktlint.Main"
     args "--android", "--color", "--reporter=plain",
-            "--reporter=checkstyle,output=${buildDir}/reports/ktlint.xml", "src/**/*.kt"
+            "--reporter=checkstyle,output=${buildDir}/reports/ktlint/ktlint.xml", "src/**/*.kt"
 }
 check.dependsOn ktlint
 
